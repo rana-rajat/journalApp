@@ -24,8 +24,6 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-//    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     public void saveEntry(User user) {
         userRepo.save(user);
     }
