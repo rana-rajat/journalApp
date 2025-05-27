@@ -3,29 +3,31 @@ package net.engineeringdigest.journalApp.api.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class WeatherResponse {
     private Request request;
     private Location location;
     private Current current;
 
-
     @Getter
     @Setter
+    @ToString
     public static class Request {
         private String type;
         private String query;
         private String language;
         private String unit;
-
-
     }
 
     @Getter
     @Setter
+    @ToString
     public static class Location {
         private String name;
         private String country;
@@ -43,11 +45,11 @@ public class WeatherResponse {
 
         @JsonProperty("utc_offset")
         private String utcOffset;
-
     }
 
     @Getter
     @Setter
+    @ToString
     public static class Current {
         @JsonProperty("observation_time")
         private String observationTime;
@@ -87,10 +89,11 @@ public class WeatherResponse {
         private int uvIndex;
 
         private int visibility;
-
     }
+
     @Getter
     @Setter
+    @ToString
     public static class Astro {
         private String sunrise;
         private String sunset;
@@ -102,11 +105,11 @@ public class WeatherResponse {
 
         @JsonProperty("moon_illumination")
         private int moonIllumination;
-
     }
 
     @Getter
     @Setter
+    @ToString
     public static class AirQuality {
         private String co;
         private String no2;
@@ -124,8 +127,5 @@ public class WeatherResponse {
 
         @JsonProperty("gb-defra-index")
         private String gbDefraIndex;
-
     }
-
-
 }

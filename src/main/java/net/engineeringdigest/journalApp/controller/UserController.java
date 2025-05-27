@@ -1,5 +1,8 @@
 package net.engineeringdigest.journalApp.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import net.engineeringdigest.journalApp.api.response.WeatherApiResponse;
+import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.UserRepo;
 import net.engineeringdigest.journalApp.service.UserService;
@@ -41,10 +44,10 @@ public class UserController {
     @GetMapping("/getByExternalApi")
     public ResponseEntity<?> getByExternalApi() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        String weatherInfo = weatherService.getWeather("Mumbai").toString();
-        String message = String.format("Hi %s, Weather feels like %s", username, weatherInfo);
-        return ResponseEntity.ok(message);
+        String userName = authentication.getName();
+        WeatherResponse weatherInfo = weatherService.getWeather("Mumbai");
+        WeatherApiResponse apiResponse = new WeatherApiResponse("Hi "+userName,weatherInfo);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")

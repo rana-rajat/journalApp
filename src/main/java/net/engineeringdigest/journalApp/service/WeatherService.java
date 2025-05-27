@@ -1,9 +1,11 @@
 package net.engineeringdigest.journalApp.service;
 
+import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class WeatherService {
     @Autowired
     RestTemplate restTemplate;
 
-    public WeatherService getWeather(String city){
+    public WeatherResponse getWeather(String city){
         String finalApi = API.replace("API",apiKey).replace("CITY",city);
 //       forPost
 //
@@ -28,14 +30,15 @@ public class WeatherService {
 //                "  \"userName\":\"Rana\",\n" +
 //                "  \"password\":\"Rana\"\n" +
 //                "}";
-//        HttpEntity<String> httpEntity = new HttpEntity<>(requestBody,httpHeaders);
-//        HttpEntity<WeatherService> response = restTemplate.exchange(finalApi, HttpMethod.POST, httpEntity, WeatherService.class);
+//        ResponseEntity<String> httpEntity = new HttpEntity<>(requestBody,httpHeaders);
+//        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.POST, httpEntity, WeatherService.class);
         //Also
 //        UserDetails user = User.builder().username("Rana").password("Rana").build();
-//        HttpEntity<net.engineeringdigest.journalApp.entity.User> httpEntiity = new HttpEntity<>(user);
-//        HttpEntity<WeatherService> response = restTemplate.exchange(finalApi, HttpMethod.POST, httpEntity, WeatherService.class);
+//        ResponseEntity<net.engineeringdigest.journalApp.entity.User> httpEntiity = new HttpEntity<>(user);
+//        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.POST, httpEntity, WeatherService.class);
 
-        HttpEntity<WeatherService> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherService.class);
+
+        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi,HttpMethod.GET,null,WeatherResponse.class);
         return response.getBody();
     }
 
