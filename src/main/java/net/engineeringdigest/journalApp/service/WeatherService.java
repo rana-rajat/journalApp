@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.service;
 
+import net.engineeringdigest.journalApp.Cache.AppCache;
 import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,15 +17,18 @@ import org.springframework.web.client.RestTemplate;
 public class WeatherService {
 
     @Value("${weather.api.key}")
-    public static String apiKey ;
+    public String apiKey;
 
-    public static final String API = "http://api.weatherstack.com/current?access_key=API&query=CITY";
+    @Autowired
+    private AppCache appCache;
 
     @Autowired
     RestTemplate restTemplate;
 
-    public WeatherResponse getWeather(String city){
-        String finalApi = API.replace("API",apiKey).replace("CITY",city);
+    public WeatherResponse getWeather(String city) {
+        String finalApi = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace("<api_key>", apiKey).replace("<city>", city);
+        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherResponse.class);
+        return response.getBody();
 //       forPost
 //
 //        HttpHeaders httpHeaders = new HttpHeaders();
@@ -41,8 +45,6 @@ public class WeatherService {
 //        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.POST, httpEntity, WeatherService.class);
 
 
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi,HttpMethod.GET,null,WeatherResponse.class);
-        return response.getBody();
     }
 
 }
