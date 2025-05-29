@@ -25,12 +25,29 @@ public class AppCache {
 
     public Map<String, String> appCache = new HashMap<>();
 
+//    @PostConstruct
+//    public void init() {
+//        List<ConfigJournalAppEntity> all = configJournalAppRepo.findAll();
+//        appCache = all.stream().collect(Collectors.toMap(ConfigJournalAppEntity::getKey,
+//                ConfigJournalAppEntity::getValue));
+//        log.info("Successfully initialized the Cache ");
+//
+//    }
     @PostConstruct
     public void init() {
-        List<ConfigJournalAppEntity> all = configJournalAppRepo.findAll();
-        appCache = all.stream().collect(Collectors.toMap(ConfigJournalAppEntity::getKey,
-                ConfigJournalAppEntity::getValue));
-        log.info("Successfully initialized the Cache ");
-
+        try {
+            List<ConfigJournalAppEntity> all = configJournalAppRepo.findAll();
+            appCache = all.stream().collect(Collectors.toMap(
+                    ConfigJournalAppEntity::getKey,
+                    ConfigJournalAppEntity::getValue
+            ));
+            log.info("Cache initialized with {} entries", appCache.size());
+        } catch (Exception e) {
+            log.error("Failed to initialize cache from DB, using defaults", e);
+            // Initialize with critical defaults
+            appCache = Map.of(
+                    "weather_api", "http://api.weatherstack.com/current?access_key=<api_key>&query=<city>"
+            );
+        }
     }
 }
