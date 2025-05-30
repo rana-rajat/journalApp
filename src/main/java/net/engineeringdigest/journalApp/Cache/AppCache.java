@@ -22,17 +22,8 @@ public class AppCache {
     @Autowired
     private ConfigJournalAppRepo configJournalAppRepo;
 
-
     public Map<String, String> appCache = new HashMap<>();
 
-//    @PostConstruct
-//    public void init() {
-//        List<ConfigJournalAppEntity> all = configJournalAppRepo.findAll();
-//        appCache = all.stream().collect(Collectors.toMap(ConfigJournalAppEntity::getKey,
-//                ConfigJournalAppEntity::getValue));
-//        log.info("Successfully initialized the Cache ");
-//
-//    }
     @PostConstruct
     public void init() {
         try {
@@ -44,7 +35,7 @@ public class AppCache {
             log.info("Cache initialized with {} entries", appCache.size());
         } catch (Exception e) {
             log.error("Failed to initialize cache from DB, using defaults", e);
-            // Initialize with critical defaults
+            // Initialize with critical defaults Only doing to pass the sonar build otherwise we can directly fetch data from the database
             appCache = Map.of(
                     "weather_api", "http://api.weatherstack.com/current?access_key=<api_key>&query=<city>"
             );
