@@ -37,7 +37,7 @@ public class AppCache {
             log.error("Failed to initialize cache from DB, using defaults", e);
             // Initialize with critical defaults Only doing to pass the sonar build otherwise we can directly fetch data from the database
             appCache = Map.of(
-                    "weather_api", "http://api.weatherstack.com/current?access_key=<api_key>&query=<city>"
+                    "WEATHER_API", "http://api.weatherstack.com/current?access_key=<api_key>&query=<city>"
             );
         }
     }
