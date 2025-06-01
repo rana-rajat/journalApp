@@ -41,10 +41,10 @@ public class UserDetailServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-//    @Test
-//   void loadUserByUsernameTest(){
-//       when(userRepo.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("Rajat").password("Rajat").roles(new ArrayList<>()) .build());
-//       UserDetails user = userDetailService.loadUserByUsername("Rajat");
-//        Assertions.assertNotNull(user);
-//   }
+    @Test
+   void loadUserByUsernameTest(){
+       when(userRepo.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("Rajat").password("Rajat").roles(new ArrayList<>()) .build());
+       UserDetails user = userDetailService.loadUserByUsername("Rajat");
+        Assertions.assertNotNull(user);
+   }
 }

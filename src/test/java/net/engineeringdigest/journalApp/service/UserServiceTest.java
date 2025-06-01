@@ -25,12 +25,12 @@ public class UserServiceTest {
     @Autowired
     UserService userService;
 
-//    @Disabled
-//    @Test
-//    public void testFindByUserName() {
-//        assertEquals(4, 2 + 1);
-//        assertNotNull(userRepo.findByUserName("Rana"));
-//    }
+    @Disabled
+    @Test
+    public void testFindByUserName() {
+        assertEquals(4, 2 + 1);
+        assertNotNull(userRepo.findByUserName("Rana"));
+    }
 
 //    @Disabled
 //    @ParameterizedTest
