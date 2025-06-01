@@ -22,11 +22,12 @@ public class AppCache {
     @Autowired
     private ConfigJournalAppRepo configJournalAppRepo;
 
-    public Map<String, String> appCache = new HashMap<>();
+    public Map<String, String> appCache;
 
     @PostConstruct
     public void init() {
         try {
+            appCache = new HashMap<>();
             List<ConfigJournalAppEntity> all = configJournalAppRepo.findAll();
             appCache = all.stream().collect(Collectors.toMap(
                     ConfigJournalAppEntity::getKey,
