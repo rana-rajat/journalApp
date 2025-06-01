@@ -17,10 +17,12 @@ public class UserRepositoryImpl {
 
     public List<User> listUserForSA(){
         Query query = new Query();
-        query.addCriteria(Criteria.where("email").regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"));
-        query.addCriteria(Criteria.where("email").exists(true));
-        query.addCriteria(Criteria.where("email").ne(null).ne(""));
-        query.addCriteria(Criteria.where("sentimentAnalysis").exists(true));
+        Criteria emailCriteria = Criteria.where("email")
+                .regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
+                .exists(true)
+                .ne(null)
+                .ne("");
+
 //        Criteria criteria = new Criteria();
 //        query.addCriteria(criteria.orOperator(
 //                Criteria.where("email").exists(true),
