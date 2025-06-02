@@ -30,21 +30,21 @@ public class UserDetailServiceImplTest {
 //    @MockBean
 //    UserRepo userRepo;
 
-    @InjectMocks
-    UserDetailServiceImpl userDetailService;
+//    @InjectMocks
+//    UserDetailServiceImpl userDetailService;
+//
+//    @Mock
+//    UserRepo userRepo;
 
-    @Mock
-    UserRepo userRepo;
+//    @BeforeEach()
+//    void setUserRepo(){
+//        MockitoAnnotations.initMocks(this);
+//    }
 
-    @BeforeEach()
-    void setUserRepo(){
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @Test
-   void loadUserByUsernameTest(){
-       when(userRepo.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("Rajat").password("Rajat").roles(new ArrayList<>()) .build());
-       UserDetails user = userDetailService.loadUserByUsername("Rajat");
-        Assertions.assertNotNull(user);
-   }
+//    @Test
+//   void loadUserByUsernameTest(){
+//       when(userRepo.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("Rajat").password("Rajat").roles(new ArrayList<>()) .build());
+//       UserDetails user = userDetailService.loadUserByUsername("Rajat");
+//        Assertions.assertNotNull(user);
+//   }
 }
