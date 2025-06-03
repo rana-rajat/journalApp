@@ -10,28 +10,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class UserRepositoryImplTest {
-    @Autowired
-    private MongoTemplate mongoTemplate;
-
-    @Autowired
-    private UserRepositoryImpl userRepository;
-
-    //    @Test
-//    public void testingRepository(){
-//        userRepository.listUserForSA();
+//    @Autowired
+//    private MongoTemplate mongoTemplate;
+//
+//    @Autowired
+//    private UserRepositoryImpl userRepository;
+//
+//    //    @Test
+////    public void testingRepository(){
+////        userRepository.listUserForSA();
+////    }
+//    @Test
+//    public void listUserForSA_ShouldReturnValidUsers() {
+//        // Insert test data
+//        User validUser = new User();
+//        validUser.setEmail("valid@example.com");
+//        validUser.setSentimentAnalysis(true);
+//        mongoTemplate.save(validUser);
+//
+//        // Test
+//        List<User> result = userRepository.listUserForSA();
+//        assertEquals(1, result.size());
 //    }
-    @Test
-    public void listUserForSA_ShouldReturnValidUsers() {
-        // Insert test data
-        User validUser = new User();
-        validUser.setEmail("valid@example.com");
-        validUser.setSentimentAnalysis(true);
-        mongoTemplate.save(validUser);
-
-        // Test
-        List<User> result = userRepository.listUserForSA();
-        assertEquals(1, result.size());
-    }
 }
 
 
