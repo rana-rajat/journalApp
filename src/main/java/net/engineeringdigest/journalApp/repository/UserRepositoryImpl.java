@@ -22,12 +22,13 @@ public class UserRepositoryImpl {
                 .exists(true)
                 .ne(null)
                 .ne("");
-
 //        Criteria criteria = new Criteria();
 //        query.addCriteria(criteria.orOperator(
 //                Criteria.where("email").exists(true),
 //                Criteria.where("sentimentAnalysis").exists(true)));
-        List<User> users = mongoTemplate.find(query, User.class);
-        return users;
+//        List<User> users = mongoTemplate.find(query, User.class);
+//        return users;
+        query.addCriteria(emailCriteria);
+        return mongoTemplate.find(query, User.class);
     }
 }
