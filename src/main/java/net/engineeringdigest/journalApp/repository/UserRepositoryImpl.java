@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.schema.JsonSchemaObject;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,12 +23,19 @@ public class UserRepositoryImpl {
                 .exists(true)
                 .ne(null)
                 .ne("");
+        query.addCriteria(Criteria.where("sentimentAnalysis").is(true));
+        //  More Example
+//        query.addCriteria(Criteria.where("sentimentAnalysis").type(JsonSchemaObject.Type.BsonType.BOOLEAN));
+//        query.addCriteria(Criteria.where("roles").in("ADMIN","USER"));
+//        query.addCriteria(Criteria.where("userName").nin("Rajat","Shanu"));
+
 //        Criteria criteria = new Criteria();
 //        query.addCriteria(criteria.orOperator(
 //                Criteria.where("email").exists(true),
 //                Criteria.where("sentimentAnalysis").exists(true)));
 //        List<User> users = mongoTemplate.find(query, User.class);
 //        return users;
+//        also we have less than .lt and lte greater than gt and gte (greater than equal to)
         query.addCriteria(emailCriteria);
         return mongoTemplate.find(query, User.class);
     }
