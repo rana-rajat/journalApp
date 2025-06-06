@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import static org.apache.coyote.http11.Constants.a;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+//@SpringBootTest
 public class UserServiceTest {
 
-    @Autowired
-    UserRepo userRepo;
-
-    @Autowired
-    UserService userService;
+//    @Autowired
+//    UserRepo userRepo;
+//
+//    @Autowired
+//    UserService userService;
 
 //    @Disabled
 //    @Test
