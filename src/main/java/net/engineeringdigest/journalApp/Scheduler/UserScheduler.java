@@ -33,7 +33,7 @@ public class UserScheduler {
         for (User user : users) {
             List<JournalEntry> journalEntryList = user.getJournalEntryList();
             //here we first get the entries based on the data And then we get only the content
-            // and later on the code is for which sentiment occure most time
+            // and later on the code is for which sentiment occur most time
             List<Sentiment> sentiments = journalEntryList.stream()
                     .filter(entry -> entry.getDate().isAfter(LocalDateTime.now().minusDays(7)))
                     .map(JournalEntry::getSentiment)
@@ -61,7 +61,7 @@ public class UserScheduler {
     }
 
     //writing scheduler for every 30 minute
-    @Scheduled(cron = "0 0/30 * * * *")
+   @Scheduled(cron = "0 0/30 * * * *")
     public void clearAppCache() {
         appCache.init();
     }
