@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.engineeringdigest.journalApp.api.response.WeatherResponse;
@@ -32,8 +33,10 @@ public class RedisService {
             ObjectMapper mapper = new ObjectMapper();
             String jsonValue = mapper.writeValueAsString(o);
             redisTemplate.opsForValue().set(key, jsonValue, ttl, TimeUnit.SECONDS);
+        } catch (JsonProcessingException e) {
+            log.error("Failed to serialize object for Redis key: {}", key, e);
         } catch (Exception e) {
-            log.error(" Exception ", e);
+            log.error("Failed to set value in Redis for key: {}", key, e);
         }
     }
 
