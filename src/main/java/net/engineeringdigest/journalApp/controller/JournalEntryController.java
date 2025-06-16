@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Slf4j
 public class JournalEntryController {
 
     @Autowired
@@ -27,18 +29,24 @@ public class JournalEntryController {
     @Autowired
     private UserService userService;
 
-
-    @PostMapping({"/createJournal"})
-    public ResponseEntity<JournalEntry> createEntity(@RequestBody JournalEntry newEntry) {
+    @PostMapping("/createJournal")
+    public ResponseEntity<?> createEntity(@RequestBody JournalEntry newEntry) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
         try {
             journalEntryService.save(newEntry, userName);
-            return new ResponseEntity<>(newEntry, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
+        } catch (IllegalArgumentException e) {
+            // For validation-type errors
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            // Log the actual exception
+            log.error("Error while creating journal entry for user {}: {}", userName, e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred. Please try again later.");
         }
-
     }
+
 
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllJournalEntriesOfUer() {
