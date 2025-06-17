@@ -64,7 +64,6 @@ public class JournalEntryController {
     public ResponseEntity<?> getById(@PathVariable ObjectId id) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(userName);
-
         Optional<JournalEntry> journalEntry = journalEntryService.getById(id);
         if (journalEntry.isPresent() && user.getJournalEntryList().stream().anyMatch(e -> e.getId().equals(id))) {
             return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);

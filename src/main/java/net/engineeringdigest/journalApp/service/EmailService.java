@@ -14,15 +14,16 @@ public class EmailService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    public void sendEmail(String to, String subject, String body){
-        try{
+    public void sendEmail(String to, String subject, String body) {
+        try {
             SimpleMailMessage mail = new SimpleMailMessage();
             mail.setTo(to);
             mail.setSubject(subject);
             mail.setText(body);
             javaMailSender.send(mail);
-        }catch (Exception e){
-            log.error("Exception while sending the mail {}", String.valueOf(e));
+            log.info("Email sent successfully to {}", to);
+        } catch (Exception e) {
+            log.error("Exception while sending email to {}: {}", to, e.getMessage(), e);
         }
     }
 }
