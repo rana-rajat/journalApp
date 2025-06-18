@@ -1,6 +1,7 @@
 package net.engineeringdigest.journalApp.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import net.engineeringdigest.journalApp.Cache.AppCache;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -18,23 +20,23 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    AppCache appCacheObj;
-
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll() {
+        log.info("Fetching all users");
         List<User> allUser = userService.getAllUser();
         if (!allUser.isEmpty()) {
             return new ResponseEntity<>(allUser, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.warn("No users found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found");
         }
 
     }
 
     @PostMapping("/create-admin-user")
-    public void createAdmin(@RequestBody User user) {
+    public ResponseEntity<String> createAdmin(@RequestBody User user) {
         userService.saveAdmin(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Admin user created successfully");
     }
 
 }
