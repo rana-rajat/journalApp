@@ -1,6 +1,7 @@
 package net.engineeringdigest.journalApp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import net.engineeringdigest.journalApp.api.response.WeatherApiResponse;
 import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import net.engineeringdigest.journalApp.entity.User;
@@ -19,16 +20,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    WeatherService weatherService;
+    private final UserService userService;
+    private final UserRepo userRepo;
+    private final WeatherService weatherService;
 
     @PutMapping("/update")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
