@@ -28,9 +28,10 @@ public class RedisService {
         }
         return null;
     }
-
+    // for how much time data will be saved in the cache with ttlInSeconds
     public void set(String key, Object value, long ttlInSeconds) {
         try {
+            //why we need it to convert it into string is that because in redis config we use string serializer so it will need string
             String jsonValue = objectMapper.writeValueAsString(value);
             redisTemplate.opsForValue().set(key, jsonValue, ttlInSeconds, TimeUnit.SECONDS);
         } catch (JsonProcessingException e) {
