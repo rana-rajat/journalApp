@@ -46,9 +46,12 @@ public class PublicController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user){
         try{
+            //the below line will internally call UserDetailServiceImpl's loadUserByUsername method to authenticate the user
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
             UserDetails userDetails = userDetailService.loadUserByUsername(user.getUserName());
-          return null;
+            String jwt = jwtUtil.generateToken(userDetails.getUsername());
+            return new ResponseEntity<>(jwt, HttpStatus.OK);
+
         }catch (Exception e){
          log.error("Exception Occurred while createAuthenticationToken",e);
          return new ResponseEntity<>("Incorrect username and password",HttpStatus.BAD_REQUEST);
