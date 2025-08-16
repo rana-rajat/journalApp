@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public class UserScheduler {
     private AppCache appCache;
 
     @Autowired
-    KafkaTemplate<String,SentimentData> kafkaTemplate;
+    KafkaTemplate<String, SentimentData> kafkaTemplate;
 
     @Scheduled(cron = "0 0 9 ? * SUN")//for evey sunday at 9 am
     //@Scheduled(cron = "0 * * ? * *")//for every one minute
@@ -59,17 +60,21 @@ public class UserScheduler {
             }
             if (mostFrequentSentiment != null) {
                 // with kafka
-                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("Sentiment For last 7 days"+ mostFrequentSentiment).build();
-                kafkaTemplate.send("weekly-sentiments",sentimentData.getEmail(),sentimentData);
-                //without kafka
-                emailService.sendEmail(user.getEmail(), "Sentiment For last 7 days", mostFrequentSentiment.toString());
+                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("Sentiment For last 7 days" + mostFrequentSentiment).build();
+                try {
+                    kafkaTemplate.send("weekly-sentiments", sentimentData.getEmail(), sentimentData);
+                } catch (Exception e) {
+                    //without kafka
+                    emailService.sendEmail(user.getEmail(), "Sentiment For last 7 days", mostFrequentSentiment.toString());
+                }
             }
+
         }
 
     }
 
     //writing scheduler for every 30 minute
-   @Scheduled(cron = "0 0/30 * * * *")
+    @Scheduled(cron = "0 0/30 * * * *")
     public void clearAppCache() {
         appCache.init();
     }
